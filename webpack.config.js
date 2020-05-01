@@ -1,6 +1,6 @@
 const path = require('path');
 const entryPath = path.join(__dirname, 'client', 'src', 'components', 'app.jsx');
-const outputPath = path.join(__dirname, 'client', 'dist', 'bundle.js');
+const outputPath = path.join(__dirname, 'client', 'dist');
 
 module.exports = {
   entry : entryPath,
