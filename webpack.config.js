@@ -1,0 +1,22 @@
+const path = require('path');
+const entryPath = path.join(__dirname, 'client', 'src', 'components', 'app.jsx');
+const outputPath = path.join(__dirname, 'client', 'dist', 'bundle.js');
+
+module.exports = {
+  entry : entryPath,
+  output: {
+    path: outputPath,
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      }
+    ]
+  }
+};
