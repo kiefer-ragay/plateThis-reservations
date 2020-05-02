@@ -2,29 +2,30 @@ const mongoose = require('mongoose');
 //const seeder = require('./seeder.js');
 
 
-mongoose.connect('mongodb://localhost/reservations');
+mongoose.connect('mongodb://localhost/reservations', { useNewUrlParser: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to database!');
-  seed();
+
 });
+
+db.dropCollection('schedules', () => {
+
+});
+
+const reservationScheduleSchema = new mongoose.Schema({
+id: Number,
+restaurantName: String,
+timeslots: Array,
+dates_closed: Array
+});
+
+const ReservationSchedule = mongoose.model('Schedule', reservationScheduleSchema);
 
 const seed = () => {
 
-
-  //drops the collection if previously created to prevent duplicate entries
-  db.dropCollection('schedules');
-
-  const reservationScheduleSchema = new mongoose.Schema({
-    id: Number,
-    restaurantName: String,
-    timeslots: Array,
-    dates_closed: Array
-  });
-
-  const ReservationSchedule = mongoose.model('Schedule', reservationScheduleSchema);
 
   const seeder = {};
 
@@ -76,4 +77,20 @@ const seed = () => {
   }
 
 }
+seed();
+
+const getSchedule = (id, callback) => {
+  ReservationSchedule.findOne({id: id}, (err, schedule) => {
+    if (err) {
+      console.log(err);
+      callback(err);
+    } else {
+      callback(null, schedule);
+    }
+  })
+}
+
+
+
+module.exports.getSchedule = getSchedule;
 
