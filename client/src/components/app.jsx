@@ -5,11 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import path from 'path';
-import Calendar from './Calendar.jsx';
-
-const serverURL = 'http://localhost:3000';
-const testId = '2';
-const reservationURL = path.join(serverURL, 'reservations', testId);
+import CalendarWrapper from './CalendarWrapper.jsx';
+import CalendarDate from './CalendarDate.jsx';
+import calendarHelpers from '../calendarHelpers.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,13 +16,15 @@ class App extends React.Component {
       dates_closed: [],
       restaurant_name: '',
       timeslots: [],
+      todaysDate: new Date().getDate(),
+      months: calendarHelpers.getSurroundingMonths(),
     };
   }
 
   getScheduleData(e) {
     e.preventDefault();
     $.ajax({
-      url: reservationURL,
+      url: 'http://localhost:3000/reservations/2',
       success: (data) => {
         this.displayData(data);
       },
@@ -51,7 +51,9 @@ class App extends React.Component {
         <p>Restaurant: {this.state.restaurant_name}</p>
         <p>Time Slots: {JSON.stringify(this.state.timeslots)}</p>
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
-        <Calendar />
+        <CalendarWrapper>
+          <CalendarDate>{this.state.todaysDate}</CalendarDate>
+        </CalendarWrapper>
       </div>
     );
   }

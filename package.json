@@ -8,17 +8,19 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start-dev": "nodemon /server/index.js"
+    "start-dev": "nodemon /server/index.js",
+    "compile": "webpack -d --watch"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.4",
+    "express": "^4.17.1",
     "jquery": "^3.5.0",
     "mongoose": "^5.9.11",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -50,7 +52,11 @@
   },
   "homepage": "https://github.com/patriot898/yelp_reservations#readme",
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
-    "setupFiles": ["./setupTests.js"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "./setupTests.js"
+    ]
   }
 }

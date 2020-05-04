@@ -15,6 +15,7 @@ app.use(express.static(publicFolder));
 
 app.listen(3000, () => {
   console.log('Server listening on port 3000!');
+  console.log(publicHTML);
 });
 
 app.get('/', (req, res) => {

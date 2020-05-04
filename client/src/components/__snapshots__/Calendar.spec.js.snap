@@ -3,5 +3,8 @@
 exports[`Calendar should render correctly in "debug" mode 1`] = `
 <div
   id="calendar"
-/>
+  style="border: thin solid black; width: 100%"
+>
+  Kiefer
+</div>
 `;
