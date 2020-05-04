@@ -8,11 +8,13 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start": "nodemon /server/index.js"
+    "start-dev": "nodemon /server/index.js"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "jest": "^25.5.3",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.4",
     "jquery": "^3.5.0",
     "mongoose": "^5.9.11",
     "react": "^16.13.1",
@@ -22,6 +24,7 @@
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
+    "babel-jest": "^25.5.1",
     "babel-loader": "^8.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
@@ -31,6 +34,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.1",
+    "jest": "^25.5.4",
     "nodemon": "^2.0.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
@@ -44,5 +48,9 @@
   "bugs": {
     "url": "https://github.com/patriot898/yelp_reservations/issues"
   },
-  "homepage": "https://github.com/patriot898/yelp_reservations#readme"
+  "homepage": "https://github.com/patriot898/yelp_reservations#readme",
+  "jest": {
+    "snapshotSerializers": ["enzyme-to-json/serializer"],
+    "setupFiles": ["./setupTests.js"]
+  }
 }

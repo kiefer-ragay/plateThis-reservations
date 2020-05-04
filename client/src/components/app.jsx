@@ -1,10 +1,15 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Calendar from './Calendar.jsx';
 import $ from 'jquery';
+import path from 'path';
+import Calendar from './Calendar.jsx';
 
-const serverURL = 'http://localhost:3000'
-const testId = '2'
+const serverURL = 'http://localhost:3000';
+const testId = '2';
+const reservationURL = path.join(serverURL, 'reservations', testId);
 
 class App extends React.Component {
   constructor(props) {
@@ -12,38 +17,33 @@ class App extends React.Component {
     this.state = {
       dates_closed: [],
       restaurant_name: '',
-      timeslots: []
-    }
+      timeslots: [],
+    };
   }
 
-  getScheduleData (e) {
+  getScheduleData(e) {
     e.preventDefault();
     $.ajax({
-      url: serverURL + '/reservations/' + testId,
+      url: reservationURL,
       success: (data) => {
-        this.displayData(data)
+        this.displayData(data);
       },
       error: () => {
-        console.log('Could not retrieve schedule data')
+        console.log('Could not retrieve schedule data');
       },
-      dataType: 'json'
-    })
+      dataType: 'json',
+    });
   }
 
-  displayData (scheduleData) {
+  displayData(scheduleData) {
     this.setState({
-      dates_closed : scheduleData.dates_closed,
+      dates_closed: scheduleData.dates_closed,
       restaurant_name: scheduleData.restaurantName,
-      timeslots: scheduleData.timeslots
-    })
-
+      timeslots: scheduleData.timeslots,
+    });
   }
 
-
-
-
-
-  render () {
+  render() {
     return (
       <div>Testing
         <br></br>
@@ -51,18 +51,11 @@ class App extends React.Component {
         <p>Restaurant: {this.state.restaurant_name}</p>
         <p>Time Slots: {JSON.stringify(this.state.timeslots)}</p>
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
-
-      <Calendar />
+        <Calendar />
       </div>
-    )
-
+    );
   }
-
-
-
-
-
 }
 
-
+// eslint-disable-next-line no-undef
 ReactDOM.render(<App />, document.getElementById('app'));
