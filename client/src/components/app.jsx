@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
@@ -18,6 +19,7 @@ class App extends React.Component {
       timeslots: [],
       todaysDate: new Date().getDate(),
       months: calendarHelpers.getSurroundingMonths(),
+      selectedMonth: new Date().getMonth(),
     };
   }
 
