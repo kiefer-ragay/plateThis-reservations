@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import styled from 'styled-components';
 
-const CalendarWrapper = styled.div`
-  width: 100px;
-  height: 100px;
+const CalendarWrapper = styled.table`
+  width: 210px;
+  height: 210px;
   border: thin solid black;
 `;
 

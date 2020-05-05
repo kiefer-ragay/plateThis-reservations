@@ -9,6 +9,7 @@ import path from 'path';
 import CalendarWrapper from './CalendarWrapper.jsx';
 import CalendarDate from './CalendarDate.jsx';
 import calendarHelpers from '../calendarHelpers.js';
+import WeekdayRow from './WeekdayRow.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -47,14 +48,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>Testing
+      <div class='calendar-container'>Testing
         <br></br>
         <button onClick={this.getScheduleData.bind(this)}>Get Data</button>
         <p>Restaurant: {this.state.restaurant_name}</p>
         <p>Time Slots: {JSON.stringify(this.state.timeslots)}</p>
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
         <CalendarWrapper>
-          <CalendarDate>{this.state.todaysDate}</CalendarDate>
+          <WeekdayRow> {calendarHelpers.weekdays.map((day) => <td>{day}</td>)}</WeekdayRow>
         </CalendarWrapper>
       </div>
     );

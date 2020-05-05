@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 const seeder = require('./seeder.js');
 const schema = require('./schema');
