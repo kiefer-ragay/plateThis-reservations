@@ -1,11 +1,10 @@
 /* eslint-disable import/extensions */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import path from 'path';
+// import path from 'path';
 import CalendarWrapper from './CalendarWrapper.jsx';
 import CalendarDate from './CalendarDate.jsx';
 import calendarHelpers from '../calendarHelpers.js';
@@ -14,6 +13,7 @@ import CalendarRow from './CalendarRow.jsx';
 import MonthSelector from './MonthSelector.jsx';
 import NextMonthButton from './NextMonthButton.jsx';
 import PreviousMonthButton from './PreviousMonthButton.jsx';
+import CalendarTable from './CalendarTable.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class App extends React.Component {
       dates_closed: [],
       restaurant_name: '',
       timeslots: [],
-      todaysDate: new Date(), //.getDate() for number
+      todaysDate: new Date(), // .getDate() for number
       selectedDate: new Date(),
       months: calendarHelpers.getSurroundingMonths(),
       selectedMonthNumber: new Date().getMonth(),
@@ -91,19 +91,21 @@ class App extends React.Component {
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
         <CalendarWrapper>
         <MonthSelector>
-          <PreviousMonthButton onClick={this.getPreviousMonth.bind(this)}>Prev</PreviousMonthButton>
+          <PreviousMonthButton onClick={this.getPreviousMonth.bind(this)}/>
           {calendarHelpers.monthNumToName(this.state.selectedMonthNumber)} {this.state.selectedYear}
-          <NextMonthButton onClick={this.getNextMonth.bind(this)}>Next</NextMonthButton>
+          <NextMonthButton onClick={this.getNextMonth.bind(this)}/>
         </MonthSelector>
-        <table>
-          <tbody>
-          <WeekdayRow>{calendarHelpers.weekdays.map((day) => <td>{day}</td>)}
-            </WeekdayRow>
-          {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
-            {row.map((day) => <CalendarDate> {day}</CalendarDate>)}
-            </CalendarRow>)}
-          </tbody>
-        </table>
+          <CalendarTable.Wrapper>
+            <CalendarTable.Table>
+              <tbody>
+              <WeekdayRow>{calendarHelpers.weekdays.map((day) => <td>{day}</td>)}
+                </WeekdayRow>
+              {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
+                {row.map((day) => <CalendarDate> {day}</CalendarDate>)}
+                </CalendarRow>)}
+              </tbody>
+            </CalendarTable.Table>
+          </CalendarTable.Wrapper>
         </CalendarWrapper>
       </div>
     );

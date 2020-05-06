@@ -51,13 +51,5 @@
   "bugs": {
     "url": "https://github.com/patriot898/yelp_reservations/issues"
   },
-  "homepage": "https://github.com/patriot898/yelp_reservations#readme",
-  "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "setupFiles": [
-      "./setupTests.js"
-    ]
-  }
+  "homepage": "https://github.com/patriot898/yelp_reservations#readme"
 }

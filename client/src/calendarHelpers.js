@@ -1,4 +1,3 @@
-/* eslint-disable spaced-comment */
 const calendarHelpers = {};
 
 calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -61,7 +60,7 @@ calendarHelpers.blankDaysBefore = (year, monthNumber) => {
   }
   return blanksArray;
 
-  //should return an array of the day numbers of prior month before the first day of current month
+  // should return an array of the day numbers of prior month before the first day of current month
 };
 
 calendarHelpers.firstWeekRow = (year, monthNumber) => {
@@ -89,11 +88,11 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
   }
   return lastWeek;
 
-  //get last day of month
-  //see which day of the week that is
-  //starting from the date of last day minus the index of the weekday,
-  //push in to a week array all days up to the last day
-  //then fill in the rest of the week starting from 1 until the length of array is 7 is 7
+  // get last day of month
+  // see which day of the week that is
+  // starting from the date of last day minus the index of the weekday,
+  // push in to a week array all days up to the last day
+  // then fill in the rest of the week starting from 1 until the length of     array is 7 is 7
 };
 
 calendarHelpers.allWeekRows = (year, monthNumber) => {

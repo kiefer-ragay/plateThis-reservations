@@ -2,8 +2,8 @@
 import styled from 'styled-components';
 
 const CalendarWrapper = styled.div`
+  border: 0;
   display: inline-block;
-  border: thin solid black;
 `;
 
 export default CalendarWrapper;
