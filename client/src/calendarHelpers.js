@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 const calendarHelpers = {};
 
 calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -27,7 +28,11 @@ calendarHelpers.firstDayOfMonth = (year, monthNumber) => (
   calendarHelpers.weekdays[new Date(year, monthNumber, 1).getDay()]
 );
 
-calendarHelpers.lastDayOfMonth = (year, monthNumber) => (
+calendarHelpers.lastDayIndexOfMonth = (year, monthNumber) => (
+  new Date(year, monthNumber, calendarHelpers.lastDateOfMonth(year, monthNumber)).getDay()
+);
+
+calendarHelpers.lastDateOfMonth = (year, monthNumber) => (
   32 - new Date(year, monthNumber, 32).getDate()
 );
 
@@ -49,14 +54,14 @@ calendarHelpers.blankDaysBefore = (year, monthNumber) => {
     previousMonthsYear -= 1;
   }
   const lastDayOfPreviousMonth = calendarHelpers
-    .lastDayOfMonth(previousMonthsYear, previousMonthNumber);
+    .lastDateOfMonth(previousMonthsYear, previousMonthNumber);
 
   for (let i = lastDayOfPreviousMonth - (numOfBlanks - 1); i <= lastDayOfPreviousMonth; i += 1) {
     blanksArray.push(i);
   }
   return blanksArray;
 
-   //should return an array of the day numbers of prior month before the first day of current month
+  //should return an array of the day numbers of prior month before the first day of current month
 };
 
 calendarHelpers.firstWeekRow = (year, monthNumber) => {
@@ -66,6 +71,49 @@ calendarHelpers.firstWeekRow = (year, monthNumber) => {
     firstWeek.push(i);
   }
   return firstWeek;
+};
+
+calendarHelpers.lastWeekRow = (year, monthNumber) => {
+  const lastDate = calendarHelpers.lastDateOfMonth(year, monthNumber);
+  const lastDayIndex = calendarHelpers.lastDayIndexOfMonth(year, monthNumber);
+  const lastWeek = [];
+
+  for (let i = lastDate - lastDayIndex; i <= lastDate; i += 1) {
+    lastWeek.push(i);
+  }
+
+  let j = 1;
+  while (lastWeek.length < 7) {
+    lastWeek.push(j);
+    j += 1;
+  }
+  return lastWeek;
+
+  //get last day of month
+  //see which day of the week that is
+  //starting from the date of last day minus the index of the weekday,
+  //push in to a week array all days up to the last day
+  //then fill in the rest of the week starting from 1 until the length of array is 7 is 7
+};
+
+calendarHelpers.allWeekRows = (year, monthNumber) => {
+  const firstWeek = calendarHelpers.firstWeekRow(year, monthNumber);
+  const lastWeek = calendarHelpers.lastWeekRow(year, monthNumber);
+  const allWeeks = [];
+  allWeeks.push(firstWeek);
+  let currentWeek = [];
+  let dayCounter = 0;
+  for (let i = firstWeek[6] + 1; i < lastWeek[0]; i += 1) {
+    currentWeek.push(i);
+    dayCounter += 1;
+    if (dayCounter === 7) {
+      allWeeks.push(currentWeek);
+      currentWeek = [];
+      dayCounter = 0;
+    }
+  }
+  allWeeks.push(lastWeek);
+  return allWeeks;
 };
 
 export default calendarHelpers;
