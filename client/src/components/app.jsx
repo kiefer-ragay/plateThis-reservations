@@ -27,7 +27,7 @@ class App extends React.Component {
       restaurant_name: '',
       timeslots: [],
       todaysDate: new Date(), // .getDate() for number
-      selectedDate: new Date(),
+      selectedDate: this.todaysId,
       months: calendarHelpers.getSurroundingMonths(),
       selectedMonthNumber: new Date().getMonth(),
       selectedYear: new Date().getYear() + 1900,
@@ -90,6 +90,16 @@ class App extends React.Component {
     return parseFloat(id) < this.todaysId;
   }
 
+  isToday(id) {
+    return parseFloat(id) === this.todaysId;
+  }
+
+  selectDate(e) {
+    this.setState({
+      selectedDate: parseFloat(e.target.id),
+    });
+  }
+
   render() {
     return (
       <div className='calendar-container'>Testing
@@ -111,8 +121,11 @@ class App extends React.Component {
                 </WeekdayRow>
               {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
                 {row.map((item) => <CalendarDate
+                onClick={this.selectDate.bind(this)}
                 id={calendarHelpers.createId(item.yr, item.mo, item.day)}
-                past={this.isPast(calendarHelpers.createId(item.yr, item.mo, item.day))}>
+                past={this.isPast(calendarHelpers.createId(item.yr, item.mo, item.day))}
+                isToday={this.isToday(calendarHelpers.createId(item.yr, item.mo, item.day))}
+                selected={calendarHelpers.createId(item.yr, item.mo, item.day) === this.state.selectedDate}>
                   {item.day}
                 </CalendarDate>)}
               </CalendarRow>)}

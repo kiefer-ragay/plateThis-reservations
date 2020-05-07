@@ -9,6 +9,7 @@ const WeekdayRow = styled.tr`
   color: #333;
   font-weight: 600;
   text-align: center;
+  padding-bottom: 2px;
 `;
 
 export default WeekdayRow;
