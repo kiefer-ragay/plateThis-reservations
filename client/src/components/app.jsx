@@ -18,11 +18,15 @@ import CalendarTable from './CalendarTable.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.day = new Date().getDate();
+    this.year = new Date().getYear() + 1900;
+    this.month = new Date().getMonth();
     this.state = {
       dates_closed: [],
       restaurant_name: '',
       timeslots: [],
       todaysDate: new Date(), // .getDate() for number
+      todaysId: calendarHelpers.createId(this.year, this.month, this.day),
       selectedDate: new Date(),
       months: calendarHelpers.getSurroundingMonths(),
       selectedMonthNumber: new Date().getMonth(),
@@ -82,6 +86,10 @@ class App extends React.Component {
     });
   }
 
+  // isPast(id) {
+  //   return parseId
+  // }
+
   render() {
     return (
       <div className='calendar-container'>Testing
@@ -102,7 +110,7 @@ class App extends React.Component {
               <WeekdayRow>{calendarHelpers.weekdays.map((day) => <td>{day}</td>)}
                 </WeekdayRow>
               {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
-                {row.map((dayObj) => <CalendarDate>{dayObj.day}</CalendarDate>)}
+                {row.map((item) => <CalendarDate dayObj={item}/>)}
               </CalendarRow>)}
               </tbody>
             </CalendarTable.Table>
@@ -115,3 +123,15 @@ class App extends React.Component {
 
 // eslint-disable-next-line no-undef
 ReactDOM.render(<App />, document.getElementById('app'));
+
+// assign unique numerical values as ids to each table cell - done
+// check if each cell's value is less than the value of the current date
+// if so, add a class unselectable to those cells
+
+// this class should make it unclickable, greyed out, and have no hover effect
+
+// disable next or previous month clicker if the next or previous month isn't in the surrounding mos
+
+// after completion of render, get the element where id is equal to the identifier for today's date
+
+// research how to have a table cell as selected value, apply a 'selected' class to that (as state)

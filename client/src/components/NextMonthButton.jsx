@@ -11,6 +11,9 @@ const NextMonthSpan = styled.span`
   right: 12px;
   top: 18px;
   user-select: none;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const NextMonthButton = (props) => (

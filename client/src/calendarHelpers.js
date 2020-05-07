@@ -4,6 +4,8 @@ calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June'
 
 calendarHelpers.weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
+// this is no longer relevant
+// just need an array of all the month's index values and year
 calendarHelpers.getSurroundingMonths = () => {
   const monthObj = {};
   const currentDate = new Date();
@@ -115,7 +117,7 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
   // see which day of the week that is
   // starting from the date of last day minus the index of the weekday,
   // push in to a week array all days up to the last day
-  // then fill in the rest of the week starting from 1 until the length of     array is 7 is 7
+  // then fill in the rest of the week starting from 1 until the length of array is 7 is 7
 };
 
 calendarHelpers.allWeekRows = (year, monthNumber) => {
@@ -142,5 +144,9 @@ calendarHelpers.allWeekRows = (year, monthNumber) => {
   allWeeks.push(lastWeek);
   return allWeeks;
 };
+
+calendarHelpers.createId = (year, monthNumber, day) => (
+  year + monthNumber * 0.01 + day * 0.0001
+);
 
 export default calendarHelpers;
