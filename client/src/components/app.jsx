@@ -21,12 +21,12 @@ class App extends React.Component {
     this.day = new Date().getDate();
     this.year = new Date().getYear() + 1900;
     this.month = new Date().getMonth();
+    this.todaysId = calendarHelpers.createId(this.year, this.month, this.day);
     this.state = {
       dates_closed: [],
       restaurant_name: '',
       timeslots: [],
       todaysDate: new Date(), // .getDate() for number
-      todaysId: calendarHelpers.createId(this.year, this.month, this.day),
       selectedDate: new Date(),
       months: calendarHelpers.getSurroundingMonths(),
       selectedMonthNumber: new Date().getMonth(),
@@ -86,9 +86,9 @@ class App extends React.Component {
     });
   }
 
-  // isPast(id) {
-  //   return parseId
-  // }
+  isPast(id) {
+    return parseFloat(id) < this.todaysId;
+  }
 
   render() {
     return (
@@ -110,7 +110,11 @@ class App extends React.Component {
               <WeekdayRow>{calendarHelpers.weekdays.map((day) => <td>{day}</td>)}
                 </WeekdayRow>
               {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
-                {row.map((item) => <CalendarDate dayObj={item}/>)}
+                {row.map((item) => <CalendarDate
+                id={calendarHelpers.createId(item.yr, item.mo, item.day)}
+                past={this.isPast(calendarHelpers.createId(item.yr, item.mo, item.day))}>
+                  {item.day}
+                </CalendarDate>)}
               </CalendarRow>)}
               </tbody>
             </CalendarTable.Table>
