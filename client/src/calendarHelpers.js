@@ -55,8 +55,13 @@ calendarHelpers.blankDaysBefore = (year, monthNumber) => {
   const lastDayOfPreviousMonth = calendarHelpers
     .lastDateOfMonth(previousMonthsYear, previousMonthNumber);
 
+
   for (let i = lastDayOfPreviousMonth - (numOfBlanks - 1); i <= lastDayOfPreviousMonth; i += 1) {
-    blanksArray.push(i);
+    const dayObj = {};
+    dayObj.day = i;
+    dayObj.yr = previousMonthsYear;
+    dayObj.mo = previousMonthNumber;
+    blanksArray.push(dayObj);
   }
   return blanksArray;
 
@@ -67,7 +72,11 @@ calendarHelpers.firstWeekRow = (year, monthNumber) => {
   const firstWeek = calendarHelpers.blankDaysBefore(year, monthNumber);
   const currentMonthsDaysInRow = 7 - firstWeek.length;
   for (let i = 1; i <= currentMonthsDaysInRow; i += 1) {
-    firstWeek.push(i);
+    const dayObj = {};
+    dayObj.day = i;
+    dayObj.yr = year;
+    dayObj.mo = monthNumber;
+    firstWeek.push(dayObj);
   }
   return firstWeek;
 };
@@ -78,12 +87,26 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
   const lastWeek = [];
 
   for (let i = lastDate - lastDayIndex; i <= lastDate; i += 1) {
-    lastWeek.push(i);
+    const dayObj = {};
+    dayObj.day = i;
+    dayObj.mo = monthNumber;
+    dayObj.yr = year;
+    lastWeek.push(dayObj);
+  }
+  let nextYear = year;
+  let nextMonth = monthNumber + 1;
+  if (nextMonth === 12) {
+    nextMonth = 0;
+    nextYear += 1;
   }
 
   let j = 1;
   while (lastWeek.length < 7) {
-    lastWeek.push(j);
+    const dayObj = {};
+    dayObj.day = j;
+    dayObj.mo = nextMonth;
+    dayObj.yr = nextYear;
+    lastWeek.push(dayObj);
     j += 1;
   }
   return lastWeek;
@@ -100,10 +123,15 @@ calendarHelpers.allWeekRows = (year, monthNumber) => {
   const lastWeek = calendarHelpers.lastWeekRow(year, monthNumber);
   const allWeeks = [];
   allWeeks.push(firstWeek);
-  let currentWeek = [];
   let dayCounter = 0;
-  for (let i = firstWeek[6] + 1; i < lastWeek[0]; i += 1) {
-    currentWeek.push(i);
+  let currentWeek = [];
+
+  for (let i = firstWeek[6].day + 1; i < lastWeek[0].day; i += 1) {
+    const dayObj = {};
+    dayObj.day = i;
+    dayObj.mo = monthNumber;
+    dayObj.yr = year;
+    currentWeek.push(dayObj);
     dayCounter += 1;
     if (dayCounter === 7) {
       allWeeks.push(currentWeek);

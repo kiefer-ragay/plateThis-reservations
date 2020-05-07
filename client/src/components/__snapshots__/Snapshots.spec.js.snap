@@ -2,6 +2,6 @@
 
 exports[`Calendar Wrapper should render correctly in "debug" mode 1`] = `
 <div
-  className="sc-AxjAm bFQbzJ"
+  className="sc-AxjAm fshISm"
 />
 `;

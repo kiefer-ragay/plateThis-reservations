@@ -101,7 +101,7 @@ class App extends React.Component {
               <WeekdayRow>{calendarHelpers.weekdays.map((day) => <td>{day}</td>)}
                 </WeekdayRow>
               {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
-                {row.map((day) => <CalendarDate> {day}</CalendarDate>)}
+                {row.map((dayObj) => <CalendarDate> {dayObj.day}</CalendarDate>)}
                 </CalendarRow>)}
               </tbody>
             </CalendarTable.Table>
