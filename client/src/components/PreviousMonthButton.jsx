@@ -8,7 +8,7 @@ const PreviousMonthArrow = styled.svg`
 
 const PreviousMonthSpan = styled.span`
   position: absolute;
-  left: 24px;
+  left: 12px;
   top: 18px;
   user-select: none;
 `;

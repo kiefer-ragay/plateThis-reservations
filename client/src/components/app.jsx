@@ -27,7 +27,8 @@ class App extends React.Component {
       months: calendarHelpers.getSurroundingMonths(),
       selectedMonthNumber: new Date().getMonth(),
       selectedYear: new Date().getYear() + 1900,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(new Date().getYear(), new Date().getMonth()),
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(new Date().getYear()
+        + 1900, new Date().getMonth()),
     };
   }
 
@@ -101,8 +102,8 @@ class App extends React.Component {
               <WeekdayRow>{calendarHelpers.weekdays.map((day) => <td>{day}</td>)}
                 </WeekdayRow>
               {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
-                {row.map((dayObj) => <CalendarDate> {dayObj.day}</CalendarDate>)}
-                </CalendarRow>)}
+                {row.map((dayObj) => <CalendarDate>{dayObj.day}</CalendarDate>)}
+              </CalendarRow>)}
               </tbody>
             </CalendarTable.Table>
           </CalendarTable.Wrapper>

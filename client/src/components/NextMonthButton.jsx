@@ -8,7 +8,7 @@ const NextMonthArrow = styled.svg`
 
 const NextMonthSpan = styled.span`
   position: absolute;
-  right: 24px;
+  right: 12px;
   top: 18px;
   user-select: none;
 `;
