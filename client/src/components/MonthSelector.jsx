@@ -11,6 +11,7 @@ const MonthSelector = styled.div`
   margin-bottom: 16px;
   vertical-align: baseline;
   position: relative;
+  user-select: none;
 `;
 
 export default MonthSelector;

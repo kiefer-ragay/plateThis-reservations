@@ -28,7 +28,7 @@ class App extends React.Component {
       timeslots: [],
       todaysDate: new Date(), // .getDate() for number
       selectedDate: this.todaysId,
-      months: calendarHelpers.getSurroundingMonths(),
+      latestMonthAllowed: calendarHelpers.getLatestMonth(this.month),
       selectedMonthNumber: new Date().getMonth(),
       selectedYear: new Date().getYear() + 1900,
       rowsOfSelectedMonth: calendarHelpers.allWeekRows(new Date().getYear()
@@ -110,9 +110,11 @@ class App extends React.Component {
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
         <CalendarWrapper>
         <MonthSelector>
-          <PreviousMonthButton onClick={this.getPreviousMonth.bind(this)}/>
+          <PreviousMonthButton onClick={this.getPreviousMonth.bind(this)}
+          disabled={this.month === this.state.selectedMonthNumber}/>
           {calendarHelpers.monthNumToName(this.state.selectedMonthNumber)} {this.state.selectedYear}
-          <NextMonthButton onClick={this.getNextMonth.bind(this)}/>
+          <NextMonthButton onClick={this.getNextMonth.bind(this)
+          } disabled={this.state.selectedMonthNumber === this.state.latestMonthAllowed}/>
         </MonthSelector>
           <CalendarTable.Wrapper>
             <CalendarTable.Table>
@@ -125,7 +127,8 @@ class App extends React.Component {
                 id={calendarHelpers.createId(item.yr, item.mo, item.day)}
                 past={this.isPast(calendarHelpers.createId(item.yr, item.mo, item.day))}
                 isToday={this.isToday(calendarHelpers.createId(item.yr, item.mo, item.day))}
-                selected={calendarHelpers.createId(item.yr, item.mo, item.day) === this.state.selectedDate}>
+                selected={calendarHelpers.createId(item.yr, item.mo,
+                  item.day) === this.state.selectedDate}>
                   {item.day}
                 </CalendarDate>)}
               </CalendarRow>)}

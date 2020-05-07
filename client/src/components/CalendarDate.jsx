@@ -10,7 +10,7 @@ const determineColor = (props) => {
   return 'inherit';
 };
 
-const determineBorder = props => {
+const determineBorder = (props) => {
   if (props.selected) {
     return '1.5px solid white';
   }
@@ -18,11 +18,6 @@ const determineBorder = props => {
     return '1.5px solid #eeeeef';
   }
   return '1.5px solid white';
-};
-
-const determineHoverBackground = (props) => {
-
-
 };
 
 const CalendarDate = styled.td`

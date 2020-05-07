@@ -25,6 +25,13 @@ calendarHelpers.getSurroundingMonths = () => {
   return monthObj;
 };
 
+calendarHelpers.getLatestMonth = (monthNumber) => {
+  if (monthNumber + 3 > 11) {
+    return monthNumber + 3 - 12;
+  }
+  return monthNumber + 3;
+};
+
 calendarHelpers.firstDayOfMonth = (year, monthNumber) => (
   calendarHelpers.weekdays[new Date(year, monthNumber, 1).getDay()]
 );
