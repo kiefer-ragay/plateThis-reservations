@@ -20,6 +20,17 @@ import ReservationBox from './ReservationBox.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.calendarMethods = {
+      getNextMonth: this.getNextMonth.bind(this),
+      getPreviousMonth: this.getPreviousMonth.bind(this),
+      isPast: this.isPast.bind(this),
+      isToday: this.isToday.bind(this),
+      selectDate: this.selectDate.bind(this),
+      showCalendar: this.showCalendar.bind(this),
+      hideCalendar: this.hideCalendar.bind(this),
+    };
+
     this.day = new Date().getDate();
     this.year = new Date().getYear() + 1900;
     this.month = new Date().getMonth();
@@ -123,6 +134,7 @@ class App extends React.Component {
         <p>Restaurant: {this.state.restaurant_name}</p>
         <p>Time Slots: {JSON.stringify(this.state.timeslots)}</p>
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
+        <br></br>
         <ReservationBox/>
         <button onClick={this.showCalendar.bind(this)}>Show Calendar</button>
         <button onClick={this.hideCalendar.bind(this)}>Hide Calendar</button>
@@ -142,11 +154,10 @@ class App extends React.Component {
               {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
                 {row.map((item) => <CalendarDate
                 onClick={this.selectDate.bind(this)}
-                id={calendarHelpers.createId(item.yr, item.mo, item.day)}
-                past={this.isPast(calendarHelpers.createId(item.yr, item.mo, item.day))}
-                isToday={this.isToday(calendarHelpers.createId(item.yr, item.mo, item.day))}
-                selected={calendarHelpers.createId(item.yr, item.mo,
-                  item.day) === this.state.selectedDate}>
+                id={item.id}
+                past={this.isPast(item.id)}
+                isToday={this.isToday(item.id)}
+                selected={item.id === this.state.selectedDate}>
                   {item.day}
                 </CalendarDate>)}
               </CalendarRow>)}

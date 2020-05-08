@@ -70,6 +70,7 @@ calendarHelpers.blankDaysBefore = (year, monthNumber) => {
     dayObj.day = i;
     dayObj.yr = previousMonthsYear;
     dayObj.mo = previousMonthNumber;
+    dayObj.id = calendarHelpers.createId(previousMonthsYear, previousMonthNumber, i);
     blanksArray.push(dayObj);
   }
   return blanksArray;
@@ -85,6 +86,7 @@ calendarHelpers.firstWeekRow = (year, monthNumber) => {
     dayObj.day = i;
     dayObj.yr = year;
     dayObj.mo = monthNumber;
+    dayObj.id = calendarHelpers.createId(year, monthNumber, i);
     firstWeek.push(dayObj);
   }
   return firstWeek;
@@ -100,6 +102,7 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
     dayObj.day = i;
     dayObj.mo = monthNumber;
     dayObj.yr = year;
+    dayObj.id = calendarHelpers.createId(year, monthNumber, i);
     lastWeek.push(dayObj);
   }
   let nextYear = year;
@@ -115,6 +118,7 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
     dayObj.day = j;
     dayObj.mo = nextMonth;
     dayObj.yr = nextYear;
+    dayObj.id = calendarHelpers.createId(nextYear, nextMonth, j);
     lastWeek.push(dayObj);
     j += 1;
   }
@@ -140,6 +144,7 @@ calendarHelpers.allWeekRows = (year, monthNumber) => {
     dayObj.day = i;
     dayObj.mo = monthNumber;
     dayObj.yr = year;
+    dayObj.id = calendarHelpers.createId(year, monthNumber, i);
     currentWeek.push(dayObj);
     dayCounter += 1;
     if (dayCounter === 7) {
@@ -153,7 +158,11 @@ calendarHelpers.allWeekRows = (year, monthNumber) => {
 };
 
 calendarHelpers.createId = (year, monthNumber, day) => (
-  year + monthNumber * 0.01 + day * 0.0001
+  calendarHelpers.roundDecimal((year + monthNumber * 0.01 + day * 0.0001), 4)
+);
+
+calendarHelpers.roundDecimal = (value, decimals) => (
+  Number(`${Math.round(`${value}e${decimals}`)}e-2${decimals}`)
 );
 
 export default calendarHelpers;
