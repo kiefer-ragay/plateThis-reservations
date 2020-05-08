@@ -1,4 +1,11 @@
+/* eslint-disable import/extensions */
 import styled from 'styled-components';
+import React from 'react';
+import WeekdayRow from './WeekdayRow.jsx';
+import CalendarRow from './CalendarRow.jsx';
+import CalendarDate from './CalendarDate.jsx';
+
+const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const Table = styled.table`
   display: table;
@@ -10,4 +17,26 @@ const Table = styled.table`
 const Wrapper = styled.div`
 `;
 
-export default { Table, Wrapper };
+const CalendarTable = (props) => (
+  <Wrapper>
+    <Table>
+      <tbody>
+      <WeekdayRow>
+      {weekdays.map((day) => <td>{day}</td>)}
+      </WeekdayRow>
+      {props.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
+        {row.map((item) => <CalendarDate
+          onClick={props.calendarMethods.selectDate}
+          id={item.id}
+          past={props.calendarMethods.isPast(item.id)}
+          isToday={props.calendarMethods.isToday(item.id)}
+          selected={item.id === props.state.selectedDate}>
+          {item.day}
+        </CalendarDate>)}
+      </CalendarRow>)}
+      </tbody>
+    </Table>
+  </Wrapper>
+);
+
+export default CalendarTable;

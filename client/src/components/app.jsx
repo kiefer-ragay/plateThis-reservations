@@ -5,15 +5,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 // import path from 'path';
-import CalendarWrapper from './CalendarWrapper.jsx';
-import CalendarDate from './CalendarDate.jsx';
+import Calendar from './Calendar.jsx';
 import calendarHelpers from '../calendarHelpers.js';
-import WeekdayRow from './WeekdayRow.jsx';
-import CalendarRow from './CalendarRow.jsx';
-import MonthSelector from './MonthSelector.jsx';
-import NextMonthButton from './NextMonthButton.jsx';
-import PreviousMonthButton from './PreviousMonthButton.jsx';
-import CalendarTable from './CalendarTable.jsx';
 import ReservationBox from './ReservationBox.jsx';
 
 
@@ -43,38 +36,40 @@ class App extends React.Component {
       selectedDate: this.todaysId,
       latestMonthAllowed: calendarHelpers.getLatestMonth(this.month),
       selectedMonthNumber: new Date().getMonth(),
+      selectedMonthName: calendarHelpers.monthNumToName(this.month),
       selectedYear: new Date().getYear() + 1900,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(new Date().getYear()
-        + 1900, new Date().getMonth()),
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.year, this.month),
       displayCalendar: true,
     };
   }
 
   getNextMonth() {
-    let selectedMonth = this.state.selectedMonthNumber + 1;
+    let selectedMonthNumber = this.state.selectedMonthNumber + 1;
     let { selectedYear } = this.state;
-    if (selectedMonth === 12) {
-      selectedMonth = 0;
+    if (selectedMonthNumber === 12) {
+      selectedMonthNumber = 0;
       selectedYear += 1;
     }
     this.setState({
-      selectedMonthNumber: selectedMonth,
+      selectedMonthNumber,
+      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
       selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonth),
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
     });
   }
 
   getPreviousMonth() {
-    let selectedMonth = this.state.selectedMonthNumber - 1;
+    let selectedMonthNumber = this.state.selectedMonthNumber - 1;
     let { selectedYear } = this.state;
-    if (selectedMonth === -1) {
-      selectedMonth = 11;
+    if (selectedMonthNumber === -1) {
+      selectedMonthNumber = 11;
       selectedYear -= 1;
     }
     this.setState({
-      selectedMonthNumber: selectedMonth,
+      selectedMonthNumber,
+      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
       selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonth),
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
     });
   }
 
@@ -138,33 +133,7 @@ class App extends React.Component {
         <ReservationBox/>
         <button onClick={this.showCalendar.bind(this)}>Show Calendar</button>
         <button onClick={this.hideCalendar.bind(this)}>Hide Calendar</button>
-        <CalendarWrapper displayed={this.state.displayCalendar}>
-        <MonthSelector>
-          <PreviousMonthButton onClick={this.getPreviousMonth.bind(this)}
-          disabled={this.month === this.state.selectedMonthNumber}/>
-          {calendarHelpers.monthNumToName(this.state.selectedMonthNumber)} {this.state.selectedYear}
-          <NextMonthButton onClick={this.getNextMonth.bind(this)
-          } disabled={this.state.selectedMonthNumber === this.state.latestMonthAllowed}/>
-        </MonthSelector>
-          <CalendarTable.Wrapper>
-            <CalendarTable.Table>
-              <tbody>
-              <WeekdayRow>{calendarHelpers.weekdays.map((day) => <td>{day}</td>)}
-                </WeekdayRow>
-              {this.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
-                {row.map((item) => <CalendarDate
-                onClick={this.selectDate.bind(this)}
-                id={item.id}
-                past={this.isPast(item.id)}
-                isToday={this.isToday(item.id)}
-                selected={item.id === this.state.selectedDate}>
-                  {item.day}
-                </CalendarDate>)}
-              </CalendarRow>)}
-              </tbody>
-            </CalendarTable.Table>
-          </CalendarTable.Wrapper>
-        </CalendarWrapper>
+        <Calendar state={this.state} calendarMethods={this.calendarMethods}/>
       </div>
     );
   }
