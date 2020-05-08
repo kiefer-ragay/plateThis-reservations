@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const CalendarWrapper = styled.div`
   border: 0;
-  display: inline-block;
+  display: ${(props) => (props.displayed ? 'inline-block' : 'none')};
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 0 18px rgba(0, 0, 0, .15);

@@ -5,7 +5,6 @@ const NextMonthArrow = styled.svg`
    height: 24px;
    width: 24px;
    fill: ${(props) => (props.disabled ? '#cfced5' : 'inherit')};
-
 `;
 
 const NextMonthSpan = styled.span`

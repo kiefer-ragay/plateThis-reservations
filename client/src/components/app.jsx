@@ -14,6 +14,8 @@ import MonthSelector from './MonthSelector.jsx';
 import NextMonthButton from './NextMonthButton.jsx';
 import PreviousMonthButton from './PreviousMonthButton.jsx';
 import CalendarTable from './CalendarTable.jsx';
+import ReservationBox from './ReservationBox.jsx';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -33,6 +35,7 @@ class App extends React.Component {
       selectedYear: new Date().getYear() + 1900,
       rowsOfSelectedMonth: calendarHelpers.allWeekRows(new Date().getYear()
         + 1900, new Date().getMonth()),
+      displayCalendar: true,
     };
   }
 
@@ -100,6 +103,18 @@ class App extends React.Component {
     });
   }
 
+  showCalendar() {
+    this.setState({
+      displayCalendar: true,
+    });
+  }
+
+  hideCalendar() {
+    this.setState({
+      displayCalendar: false,
+    });
+  }
+
   render() {
     return (
       <div className='calendar-container'>Testing
@@ -108,7 +123,10 @@ class App extends React.Component {
         <p>Restaurant: {this.state.restaurant_name}</p>
         <p>Time Slots: {JSON.stringify(this.state.timeslots)}</p>
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
-        <CalendarWrapper>
+        <ReservationBox/>
+        <button onClick={this.showCalendar.bind(this)}>Show Calendar</button>
+        <button onClick={this.hideCalendar.bind(this)}>Hide Calendar</button>
+        <CalendarWrapper displayed={this.state.displayCalendar}>
         <MonthSelector>
           <PreviousMonthButton onClick={this.getPreviousMonth.bind(this)}
           disabled={this.month === this.state.selectedMonthNumber}/>
