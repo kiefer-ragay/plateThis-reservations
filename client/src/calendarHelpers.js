@@ -2,7 +2,7 @@ const calendarHelpers = {};
 
 calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-calendarHelpers.weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+calendarHelpers.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 // this is no longer relevant
 // just need an array of all the month's index values and year
@@ -55,6 +55,8 @@ calendarHelpers.monthNumToName = (monthNumber) => (
 calendarHelpers.blankDaysBefore = (year, monthNumber) => {
   const blanksArray = [];
   const numOfBlanks = new Date(year, monthNumber, 1).getDay();
+  console.log(numOfBlanks);
+  console.log(new Date(year, monthNumber, 1).getDay());
   let previousMonthNumber = monthNumber - 1;
   let previousMonthsYear = year;
   if (monthNumber === 0) {
@@ -161,8 +163,18 @@ calendarHelpers.createId = (year, monthNumber, day) => (
   calendarHelpers.roundDecimal((year + monthNumber * 0.01 + day * 0.0001), 4)
 );
 
+calendarHelpers.parseId = (id) => {
+  const floatedId = parseFloat(id);
+  const year = Math.floor(id);
+  const monthNum = calendarHelpers.roundDecimal(floatedId % 1, 2) * 100;
+  const monthName = calendarHelpers.monthNumToName(monthNum);
+  const day = calendarHelpers.roundDecimal(((floatedId % 1) % 0.01 * 10000), 4);
+  const dayOfWeek = calendarHelpers.weekdays[new Date(year, monthNum, day).getDay()];
+  return (`${dayOfWeek}, ${monthName} ${day}`);
+};
+
 calendarHelpers.roundDecimal = (value, decimals) => (
-  Number(`${Math.round(`${value}e${decimals}`)}e-2${decimals}`)
+  Number(Math.round(value + 'e' + decimals) +'e-' + decimals)
 );
 
 export default calendarHelpers;

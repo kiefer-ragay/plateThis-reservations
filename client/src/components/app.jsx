@@ -37,6 +37,7 @@ class App extends React.Component {
       selectedMonthNumber: new Date().getMonth(),
       selectedMonthName: calendarHelpers.monthNumToName(this.month),
       selectedYear: new Date().getYear() + 1900,
+      longDate: calendarHelpers.parseId(this.todaysId),
       rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.year, this.month),
       displayCalendar: false,
     };
@@ -111,13 +112,14 @@ class App extends React.Component {
   }
 
   selectDate(e) {
+    const dateId = parseFloat(e.target.id);
     this.setState({
-      selectedDate: parseFloat(e.target.id),
+      selectedDate: dateId,
+      longDate: calendarHelpers.parseId(dateId),
     });
   }
 
   showCalendar() {
-    console.log('Clicked');
     this.setState({
       displayCalendar: true,
     });
