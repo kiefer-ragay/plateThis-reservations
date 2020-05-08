@@ -5,7 +5,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 // import path from 'path';
-import Calendar from './Calendar.jsx';
 import calendarHelpers from '../calendarHelpers.js';
 import ReservationBox from './ReservationBox.jsx';
 
@@ -39,8 +38,16 @@ class App extends React.Component {
       selectedMonthName: calendarHelpers.monthNumToName(this.month),
       selectedYear: new Date().getYear() + 1900,
       rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.year, this.month),
-      displayCalendar: true,
+      displayCalendar: false,
     };
+  }
+
+  componentDidMount() {
+    document.body.addEventListener('click', this.hideCalendar.bind(this));
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('click', this.hideCalendar.bind(this));
   }
 
   getNextMonth() {
@@ -110,6 +117,7 @@ class App extends React.Component {
   }
 
   showCalendar() {
+    console.log('Clicked');
     this.setState({
       displayCalendar: true,
     });
@@ -130,10 +138,8 @@ class App extends React.Component {
         <p>Time Slots: {JSON.stringify(this.state.timeslots)}</p>
         <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
         <br></br>
-        <ReservationBox/>
-        <button onClick={this.showCalendar.bind(this)}>Show Calendar</button>
-        <button onClick={this.hideCalendar.bind(this)}>Hide Calendar</button>
-        <Calendar state={this.state} calendarMethods={this.calendarMethods}/>
+        <ReservationBox state={this.state} calendarMethods={this.calendarMethods}
+        showCalendar={this.showCalendar.bind(this)}/>
       </div>
     );
   }

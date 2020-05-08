@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import Calendar from './Calendar.jsx';
 
 const CalendarDropdownBox = styled.div`
   width: 299px;
@@ -29,8 +30,8 @@ const SvgSpan = styled.span`
   pointer-events: none;
 `;
 
-const CalendarDropdownButton = () => (
-  <CalendarDropdownBox>
+const CalendarDropdownButton = (props) => (
+  <CalendarDropdownBox onClick={props.showCalendar}>
     Day
     <SvgSpan>
       <Svg xmlns='http://www.w3.org/2000/svg'>
@@ -38,6 +39,7 @@ const CalendarDropdownButton = () => (
       </Svg>
     </SvgSpan>
   </CalendarDropdownBox>
+
 );
 
 export default CalendarDropdownButton;

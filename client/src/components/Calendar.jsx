@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import styled from 'styled-components';
 import React from 'react';
 import MonthSelector from './MonthSelector.jsx';
@@ -12,6 +11,10 @@ const CalendarWrapper = styled.div`
   box-shadow: 0 0 18px rgba(0, 0, 0, .15);
   min-width: 312px;
   border: 1px solid #ccc;
+  position: absolute;
+  top: 113px;
+  left: 24px;
+  z-index: 1;
 `;
 
 const Calendar = (props) => (

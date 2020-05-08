@@ -7,6 +7,7 @@ const ReservationWrapper = styled.div`
   border: 1px solid #eeeeef;
   border-radius: 4px;
   width: fit-content;
+  position: relative;
 `;
 
 export default ReservationWrapper;
