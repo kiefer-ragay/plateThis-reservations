@@ -171,13 +171,20 @@ calendarHelpers.idToLongDate = (id) => {
   return (`${dayOfWeek}, ${monthName} ${day}`);
 };
 
-calendarHelpers.dayFromId = (id) => {
-  const floatedId = parseFloat(id);
+calendarHelpers.weekdayFromId = (id) => {
   const year = Math.floor(id);
-  const monthNum = Math.round(calendarHelpers.roundDecimal(floatedId % 1, 2) * 100);
-  const day = Math.round(calendarHelpers.roundDecimal(((floatedId % 1) % 0.01 * 10000), 4));
+  const monthNum = calendarHelpers.monthFromId(id);
+  const day = calendarHelpers.dayNumFromId(id);
   return new Date(year, monthNum, day).getDay();
 };
+
+calendarHelpers.monthFromId = (id) => (
+  Math.round(calendarHelpers.roundDecimal(parseFloat(id) % 1, 2) * 100)
+);
+
+calendarHelpers.dayNumFromId = (id) => (
+  Math.round(calendarHelpers.roundDecimal(((parseFloat(id) % 1) % 0.01 * 10000), 4))
+);
 
 calendarHelpers.roundDecimal = (value, decimals) => (
   // eslint-disable-next-line prefer-template

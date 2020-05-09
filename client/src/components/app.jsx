@@ -4,7 +4,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import path from 'path';
 import calendarHelpers from '../calendarHelpers.js';
 import ReservationBox from './ReservationBox.jsx';
 
@@ -20,6 +19,7 @@ class App extends React.Component {
 
     this.todaysId = calendarHelpers.createId(new Date().getYear() + 1900, new Date().getMonth(),
       new Date().getDate());
+
     this.state = {
       dates_closed: [],
       restaurant_name: '',
@@ -71,7 +71,6 @@ class App extends React.Component {
     const dateId = parseFloat(e.target.id);
     this.setState({
       selectedDateId: dateId,
-      selectedWeekdayIndex: calendarHelpers.dayFromId(dateId),
     }, this.delayedClose);
   }
 

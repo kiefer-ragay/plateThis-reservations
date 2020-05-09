@@ -29,11 +29,9 @@ class CalendarClass extends React.Component {
       isToday: this.isToday.bind(this),
     };
 
-    this.day = new Date().getDate();
-    this.year = new Date().getYear() + 1900;
-    this.month = new Date().getMonth();
-    this.todaysId = calendarHelpers.createId(this.year, this.month, this.day);
-    this.latestMonthAllowed = calendarHelpers.getLatestMonth(this.month);
+    this.todaysId = calendarHelpers.createId(new Date().getYear() + 1900, new Date().getMonth(),
+      new Date().getDate());
+    this.latestMonthAllowed = calendarHelpers.getLatestMonth(new Date().getMonth());
     this.state = {
       selectedMonthNumber: this.month,
       selectedMonthName: calendarHelpers.monthNumToName(this.month),
@@ -92,13 +90,5 @@ class CalendarClass extends React.Component {
     );
   }
 }
-
-const CalendarFunc = (props) => (
-  <CalendarWrapper onClick={props.reservationMethods.showCalendar}
-  displayed={props.state.displayCalendar}>
-    <MonthSelector topState={props.topState} reservationMethods={props.reservationMethods}/>
-    <CalendarTable topState={props.topState} reservationMethods={props.reservationMethods}/>
-  </CalendarWrapper>
-);
 
 export default CalendarClass;
