@@ -30,7 +30,7 @@ const CalendarTable = (props) => (
           id={item.id}
           past={props.calendarMethods.isPast(item.id)}
           isToday={props.calendarMethods.isToday(item.id)}
-          selected={item.id === props.state.selectedDate}>
+          selected={item.id === props.state.selectedDateId}>
           {item.day}
         </CalendarDate>)}
       </CalendarRow>)}

@@ -1,5 +1,30 @@
+/* eslint-disable radix */
 import styled from 'styled-components';
 import React from 'react';
+
+const peopleArray = (maxPeople) => {
+  const arr = [];
+  let i = 2;
+  while (i <= maxPeople) {
+    arr.push(i);
+    i += 1;
+  }
+  return arr;
+};
+
+const parseTimeslot = (timeslot) => {
+  const timeString = timeslot.toString();
+  let hour = parseInt(timeString.substring(0, 2));
+  const minutes = timeString.substring(2, 4);
+  let amPm = 'am';
+  if (hour === 12) {
+    amPm = 'pm';
+  } else if (hour > 12) {
+    hour -= 12;
+    amPm = 'pm';
+  }
+  return (`${hour}:${minutes} ${amPm}`);
+};
 
 const SvgLight = styled.svg`
   height: 18px;
@@ -65,7 +90,8 @@ const TimeDropdown = (props) => (
       </SvgDark>
     </RightSvgSpan>
     <SelectBox>
-    <option value='1100'>11:00 am</option>
+    {props.timeslots[props.weekdayIndex].map((slot) => <option value={slot}>
+      {parseTimeslot(slot)}</option>)}
     </SelectBox>
   </SelectWrapper>
 );
@@ -83,8 +109,9 @@ const SizeDropdown = (props) => (
       <path d='M8 10.5a1 1 0 0 1-.7-.29l-3.06-3a1 1 0 1 1 1.41-1.42L8 8.1l2.35-2.31a1 1 0 0 1 1.41 1.42l-3.06 3a1 1 0 0 1-.7.29z'></path>
       </SvgDark>
     </RightSvgSpan>
-    <SelectBox>
-    <option value='1100'>2 People</option>
+    <SelectBox onChange={props.setPartySize} defaultValue='2'>
+    <option value='1'>1 person</option>
+    {peopleArray(20).map((number) => <option value={number}>{number} people</option>)}
     </SelectBox>
   </SelectWrapper>
 );
@@ -96,8 +123,8 @@ const DropdownBox = styled.div`
 
 const DropdownContainer = (props) => (
   <DropdownBox>
-    <TimeDropdown/>
-    <SizeDropdown/>
+    <TimeDropdown timeslots={props.timeslots} weekdayIndex={props.weekdayIndex}/>
+    <SizeDropdown setPartySize={props.setPartySize}/>
   </DropdownBox>
 );
 

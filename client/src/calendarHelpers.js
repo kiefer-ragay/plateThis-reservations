@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 const calendarHelpers = {};
 
 calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -55,8 +56,6 @@ calendarHelpers.monthNumToName = (monthNumber) => (
 calendarHelpers.blankDaysBefore = (year, monthNumber) => {
   const blanksArray = [];
   const numOfBlanks = new Date(year, monthNumber, 1).getDay();
-  console.log(numOfBlanks);
-  console.log(new Date(year, monthNumber, 1).getDay());
   let previousMonthNumber = monthNumber - 1;
   let previousMonthsYear = year;
   if (monthNumber === 0) {
@@ -65,7 +64,6 @@ calendarHelpers.blankDaysBefore = (year, monthNumber) => {
   }
   const lastDayOfPreviousMonth = calendarHelpers
     .lastDateOfMonth(previousMonthsYear, previousMonthNumber);
-
 
   for (let i = lastDayOfPreviousMonth - (numOfBlanks - 1); i <= lastDayOfPreviousMonth; i += 1) {
     const dayObj = {};
@@ -166,15 +164,24 @@ calendarHelpers.createId = (year, monthNumber, day) => (
 calendarHelpers.parseId = (id) => {
   const floatedId = parseFloat(id);
   const year = Math.floor(id);
-  const monthNum = calendarHelpers.roundDecimal(floatedId % 1, 2) * 100;
+  const monthNum = Math.round(calendarHelpers.roundDecimal(floatedId % 1, 2) * 100);
   const monthName = calendarHelpers.monthNumToName(monthNum);
-  const day = calendarHelpers.roundDecimal(((floatedId % 1) % 0.01 * 10000), 4);
+  const day = Math.round(calendarHelpers.roundDecimal(((floatedId % 1) % 0.01 * 10000), 4));
   const dayOfWeek = calendarHelpers.weekdays[new Date(year, monthNum, day).getDay()];
   return (`${dayOfWeek}, ${monthName} ${day}`);
 };
 
+calendarHelpers.dayFromId = (id) => {
+  const floatedId = parseFloat(id);
+  const year = Math.floor(id);
+  const monthNum = Math.round(calendarHelpers.roundDecimal(floatedId % 1, 2) * 100);
+  const day = Math.round(calendarHelpers.roundDecimal(((floatedId % 1) % 0.01 * 10000), 4));
+  return new Date(year, monthNum, day).getDay();
+};
+
 calendarHelpers.roundDecimal = (value, decimals) => (
-  Number(Math.round(value + 'e' + decimals) +'e-' + decimals)
+  // eslint-disable-next-line prefer-template
+  Number(Math.round(value + 'e' + decimals) + 'e-' + decimals)
 );
 
 export default calendarHelpers;

@@ -1,13 +1,12 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 // import path from 'path';
 import calendarHelpers from '../calendarHelpers.js';
 import ReservationBox from './ReservationBox.jsx';
-
 
 class App extends React.Component {
   constructor(props) {
@@ -21,6 +20,7 @@ class App extends React.Component {
       selectDate: this.selectDate.bind(this),
       showCalendar: this.showCalendar.bind(this),
       hideCalendar: this.hideCalendar.bind(this),
+      setPartySize: this.setPartySize.bind(this),
     };
 
     this.day = new Date().getDate();
@@ -30,21 +30,24 @@ class App extends React.Component {
     this.state = {
       dates_closed: [],
       restaurant_name: '',
-      timeslots: [],
+      timeslots: [[1100], [1100], [1100], [1100], [1100], [1100], [1100]],
       todaysDate: new Date(), // .getDate() for number
-      selectedDate: this.todaysId,
+      selectedDateId: this.todaysId,
+      selectedWeekdayIndex: new Date().getDay(),
       latestMonthAllowed: calendarHelpers.getLatestMonth(this.month),
-      selectedMonthNumber: new Date().getMonth(),
+      selectedMonthNumber: this.month,
       selectedMonthName: calendarHelpers.monthNumToName(this.month),
       selectedYear: new Date().getYear() + 1900,
       longDate: calendarHelpers.parseId(this.todaysId),
       rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.year, this.month),
       displayCalendar: false,
+      partySize: 2,
     };
   }
 
   componentDidMount() {
     document.body.addEventListener('click', this.hideCalendar.bind(this));
+    this.getScheduleData();
   }
 
   componentWillUnmount() {
@@ -81,12 +84,11 @@ class App extends React.Component {
     });
   }
 
-  getScheduleData(e) {
-    e.preventDefault();
+  getScheduleData() {
     $.ajax({
       url: 'http://localhost:3000/reservations/2',
       success: (data) => {
-        this.displayData(data);
+        this.setData(data);
       },
       error: () => {
         console.log('Could not retrieve schedule data');
@@ -95,11 +97,17 @@ class App extends React.Component {
     });
   }
 
-  displayData(scheduleData) {
+  setData(scheduleData) {
     this.setState({
       dates_closed: scheduleData.dates_closed,
       restaurant_name: scheduleData.restaurantName,
       timeslots: scheduleData.timeslots,
+    });
+  }
+
+  setPartySize(e) {
+    this.setState({
+      partySize: e.target.value,
     });
   }
 
@@ -111,12 +119,21 @@ class App extends React.Component {
     return parseFloat(id) === this.todaysId;
   }
 
+  delayedClose() {
+    setTimeout(() => {
+      this.setState({
+        displayCalendar: false,
+      });
+    }, 200);
+  }
+
   selectDate(e) {
     const dateId = parseFloat(e.target.id);
     this.setState({
-      selectedDate: dateId,
+      selectedDateId: dateId,
       longDate: calendarHelpers.parseId(dateId),
-    });
+      selectedWeekdayIndex: calendarHelpers.dayFromId(dateId),
+    }, this.delayedClose);
   }
 
   showCalendar() {
@@ -133,21 +150,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className='calendar-container'>Testing
-        <br></br>
-        <button onClick={this.getScheduleData.bind(this)}>Get Data</button>
-        <p>Restaurant: {this.state.restaurant_name}</p>
-        <p>Time Slots: {JSON.stringify(this.state.timeslots)}</p>
-        <p>Days Closed: {JSON.stringify(this.state.dates_closed)}</p>
-        <br></br>
-        <ReservationBox state={this.state} calendarMethods={this.calendarMethods}
-        showCalendar={this.showCalendar.bind(this)}/>
+      <div className='calendar-container'>
+        <ReservationBox state={this.state} calendarMethods={this.calendarMethods}/>
       </div>
     );
   }
 }
 
-// eslint-disable-next-line no-undef
 ReactDOM.render(<App />, document.getElementById('app'));
 
 // assign unique numerical values as ids to each table cell - done

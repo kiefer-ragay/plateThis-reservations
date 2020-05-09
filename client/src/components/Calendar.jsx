@@ -18,7 +18,8 @@ const CalendarWrapper = styled.div`
 `;
 
 const Calendar = (props) => (
-  <CalendarWrapper displayed={props.state.displayCalendar}>
+  <CalendarWrapper onClick={props.calendarMethods.showCalendar}
+  displayed={props.state.displayCalendar}>
     <MonthSelector state={props.state} calendarMethods={props.calendarMethods}/>
     <CalendarTable state={props.state} calendarMethods={props.calendarMethods}/>
   </CalendarWrapper>

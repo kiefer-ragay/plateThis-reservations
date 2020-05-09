@@ -11,10 +11,11 @@ const ReservationBox = (props) => (
   <ReservationWrapper>
     <Calendar state={props.state} calendarMethods={props.calendarMethods}/>
     <ReservationHeader/>
-    <CalendarDropdownButton showCalendar={props.showCalendar}
-    state={props.state} calendarMethods={props.calendarMethods}>
+    <CalendarDropdownButton showCalendar={props.calendarMethods.showCalendar}
+    longDate={props.state.longDate} calendarMethods={props.calendarMethods}>
     </CalendarDropdownButton>
-    <DropdownContainer/>
+    <DropdownContainer setPartySize={props.calendarMethods.setPartySize}
+    timeslots={props.state.timeslots} weekdayIndex={props.state.selectedWeekdayIndex}/>
     <FindTableButton>Find a Table</FindTableButton>
   </ReservationWrapper>
 );
