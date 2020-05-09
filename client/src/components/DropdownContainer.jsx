@@ -1,7 +1,6 @@
 /* eslint-disable radix */
 import styled from 'styled-components';
 import React from 'react';
-import calendarHelpers from '../calendarHelpers.js';
 
 const peopleArray = (maxPeople) => {
   const arr = [];
@@ -91,7 +90,7 @@ const TimeDropdown = (props) => (
       </SvgDark>
     </RightSvgSpan>
     <SelectBox>
-    {props.timeslots[calendarHelpers.dayFromId(props.selectedDateId)].map((slot) => <option value={slot}>
+    {props.timeslots[props.weekdayIndex].map((slot) => <option value={slot}>
       {parseTimeslot(slot)}</option>)}
     </SelectBox>
   </SelectWrapper>
@@ -110,7 +109,7 @@ const SizeDropdown = (props) => (
       <path d='M8 10.5a1 1 0 0 1-.7-.29l-3.06-3a1 1 0 1 1 1.41-1.42L8 8.1l2.35-2.31a1 1 0 0 1 1.41 1.42l-3.06 3a1 1 0 0 1-.7.29z'></path>
       </SvgDark>
     </RightSvgSpan>
-    <SelectBox defaultValue='2'>
+    <SelectBox onChange={props.setPartySize} defaultValue='2'>
     <option value='1'>1 person</option>
     {peopleArray(20).map((number) => <option value={number}>{number} people</option>)}
     </SelectBox>
@@ -124,8 +123,8 @@ const DropdownBox = styled.div`
 
 const DropdownContainer = (props) => (
   <DropdownBox>
-    <TimeDropdown timeslots={props.timeslots} selectedDateId={props.selectedDateId}/>
-    <SizeDropdown/>
+    <TimeDropdown timeslots={props.timeslots} weekdayIndex={props.weekdayIndex}/>
+    <SizeDropdown setPartySize={props.setPartySize}/>
   </DropdownBox>
 );
 

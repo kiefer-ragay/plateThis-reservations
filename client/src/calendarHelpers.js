@@ -161,7 +161,7 @@ calendarHelpers.createId = (year, monthNumber, day) => (
   calendarHelpers.roundDecimal((year + monthNumber * 0.01 + day * 0.0001), 4)
 );
 
-calendarHelpers.idToLongDate = (id) => {
+calendarHelpers.parseId = (id) => {
   const floatedId = parseFloat(id);
   const year = Math.floor(id);
   const monthNum = Math.round(calendarHelpers.roundDecimal(floatedId % 1, 2) * 100);

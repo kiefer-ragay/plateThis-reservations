@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import React from 'react';
 import MonthSelector from './MonthSelector.jsx';
 import CalendarTable from './CalendarTable.jsx';
-import calendarHelpers from '../calendarHelpers.js';
 
 const CalendarWrapper = styled.div`
   border: 0;
@@ -18,87 +17,12 @@ const CalendarWrapper = styled.div`
   z-index: 1;
 `;
 
-class CalendarClass extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.calendarMethods = {
-      getNextMonth: this.getNextMonth.bind(this),
-      getPreviousMonth: this.getPreviousMonth.bind(this),
-      isPast: this.isPast.bind(this),
-      isToday: this.isToday.bind(this),
-    };
-
-    this.day = new Date().getDate();
-    this.year = new Date().getYear() + 1900;
-    this.month = new Date().getMonth();
-    this.todaysId = calendarHelpers.createId(this.year, this.month, this.day);
-    this.latestMonthAllowed = calendarHelpers.getLatestMonth(this.month);
-    this.state = {
-      selectedMonthNumber: this.month,
-      selectedMonthName: calendarHelpers.monthNumToName(this.month),
-      selectedYear: new Date().getYear() + 1900,
-      latestMonthAllowed: calendarHelpers.getLatestMonth(this.month),
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.year, this.month),
-    };
-  }
-
-  getNextMonth() {
-    let selectedMonthNumber = this.state.selectedMonthNumber + 1;
-    let { selectedYear } = this.state;
-    if (selectedMonthNumber === 12) {
-      selectedMonthNumber = 0;
-      selectedYear += 1;
-    }
-    this.setState({
-      selectedMonthNumber,
-      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
-      selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
-    });
-  }
-
-  getPreviousMonth() {
-    let selectedMonthNumber = this.state.selectedMonthNumber - 1;
-    let { selectedYear } = this.state;
-    if (selectedMonthNumber === -1) {
-      selectedMonthNumber = 11;
-      selectedYear -= 1;
-    }
-    this.setState({
-      selectedMonthNumber,
-      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
-      selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
-    });
-  }
-
-  isPast(id) {
-    return parseFloat(id) < this.todaysId;
-  }
-
-  isToday(id) {
-    return parseFloat(id) === this.todaysId;
-  }
-
-  render() {
-    return (
-    <CalendarWrapper onClick={this.props.reservationMethods.showCalendar}
-    // displayed is passed down through main app state
-     displayed={this.props.topState.displayCalendar}>
-      <MonthSelector state={this.state} calendarMethods={this.calendarMethods}/>
-      <CalendarTable state={this.state} calendarMethods={this.calendarMethods} reservationMethods={this.props.reservationMethods} selectedId={this.props.topState.selectedDateId}/>
-   </CalendarWrapper>
-    );
-  }
-}
-
-const CalendarFunc = (props) => (
-  <CalendarWrapper onClick={props.reservationMethods.showCalendar}
+const Calendar = (props) => (
+  <CalendarWrapper onClick={props.calendarMethods.showCalendar}
   displayed={props.state.displayCalendar}>
-    <MonthSelector topState={props.topState} reservationMethods={props.reservationMethods}/>
-    <CalendarTable topState={props.topState} reservationMethods={props.reservationMethods}/>
+    <MonthSelector state={props.state} calendarMethods={props.calendarMethods}/>
+    <CalendarTable state={props.state} calendarMethods={props.calendarMethods}/>
   </CalendarWrapper>
 );
 
-export default CalendarClass;
+export default Calendar;

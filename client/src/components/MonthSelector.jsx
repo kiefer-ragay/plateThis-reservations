@@ -20,7 +20,7 @@ const MonthSelectorContainer = styled.div`
 const MonthSelector = (props) => (
   <MonthSelectorContainer id='monthSelector'>
     <PreviousMonthButton onClick={props.calendarMethods.getPreviousMonth}
-    disabled={new Date().getMonth() === props.state.selectedMonthNumber}/>
+    disabled={props.state.todaysDate.getMonth() === props.state.selectedMonthNumber}/>
     {props.state.selectedMonthName} {props.state.selectedYear}
     <NextMonthButton onClick={props.calendarMethods.getNextMonth}
     disabled={props.state.selectedMonthNumber === props.state.latestMonthAllowed}/>

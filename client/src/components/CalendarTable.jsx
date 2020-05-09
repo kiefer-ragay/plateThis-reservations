@@ -26,11 +26,11 @@ const CalendarTable = (props) => (
       </WeekdayRow>
       {props.state.rowsOfSelectedMonth.map((row) => <CalendarRow>
         {row.map((item) => <CalendarDate
-          onClick={props.reservationMethods.selectDate}
+          onClick={props.calendarMethods.selectDate}
           id={item.id}
           past={props.calendarMethods.isPast(item.id)}
           isToday={props.calendarMethods.isToday(item.id)}
-          selected={item.id === props.selectedId}>
+          selected={item.id === props.state.selectedDateId}>
           {item.day}
         </CalendarDate>)}
       </CalendarRow>)}
