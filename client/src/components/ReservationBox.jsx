@@ -9,13 +9,13 @@ import Calendar from './Calendar.jsx';
 
 const ReservationBox = (props) => (
   <ReservationWrapper>
-    <Calendar state={props.state} calendarMethods={props.calendarMethods}/>
+    <Calendar topState={props.state} reservationMethods={props.reservationMethods}/>
     <ReservationHeader/>
-    <CalendarDropdownButton showCalendar={props.calendarMethods.showCalendar}
-    longDate={props.state.longDate} calendarMethods={props.calendarMethods}>
+    <CalendarDropdownButton showCalendar={props.reservationMethods.showCalendar}
+    selectedDateId={props.state.selectedDateId}>
     </CalendarDropdownButton>
-    <DropdownContainer setPartySize={props.calendarMethods.setPartySize}
-    timeslots={props.state.timeslots} weekdayIndex={props.state.selectedWeekdayIndex}/>
+    <DropdownContainer
+    timeslots={props.state.timeslots} selectedDateId={props.state.selectedDateId}/>
     <FindTableButton>Find a Table</FindTableButton>
   </ReservationWrapper>
 );

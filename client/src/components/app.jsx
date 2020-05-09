@@ -12,36 +12,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.calendarMethods = {
-      getNextMonth: this.getNextMonth.bind(this),
-      getPreviousMonth: this.getPreviousMonth.bind(this),
-      isPast: this.isPast.bind(this),
-      isToday: this.isToday.bind(this),
+    this.reservationMethods = {
       selectDate: this.selectDate.bind(this),
       showCalendar: this.showCalendar.bind(this),
       hideCalendar: this.hideCalendar.bind(this),
-      setPartySize: this.setPartySize.bind(this),
     };
 
-    this.day = new Date().getDate();
-    this.year = new Date().getYear() + 1900;
-    this.month = new Date().getMonth();
-    this.todaysId = calendarHelpers.createId(this.year, this.month, this.day);
+    this.todaysId = calendarHelpers.createId(new Date().getYear() + 1900, new Date().getMonth(),
+      new Date().getDate());
     this.state = {
       dates_closed: [],
       restaurant_name: '',
       timeslots: [[1100], [1100], [1100], [1100], [1100], [1100], [1100]],
-      todaysDate: new Date(), // .getDate() for number
       selectedDateId: this.todaysId,
-      selectedWeekdayIndex: new Date().getDay(),
-      latestMonthAllowed: calendarHelpers.getLatestMonth(this.month),
-      selectedMonthNumber: this.month,
-      selectedMonthName: calendarHelpers.monthNumToName(this.month),
-      selectedYear: new Date().getYear() + 1900,
-      longDate: calendarHelpers.parseId(this.todaysId),
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.year, this.month),
       displayCalendar: false,
-      partySize: 2,
     };
   }
 
@@ -52,36 +36,6 @@ class App extends React.Component {
 
   componentWillUnmount() {
     document.body.removeEventListener('click', this.hideCalendar.bind(this));
-  }
-
-  getNextMonth() {
-    let selectedMonthNumber = this.state.selectedMonthNumber + 1;
-    let { selectedYear } = this.state;
-    if (selectedMonthNumber === 12) {
-      selectedMonthNumber = 0;
-      selectedYear += 1;
-    }
-    this.setState({
-      selectedMonthNumber,
-      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
-      selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
-    });
-  }
-
-  getPreviousMonth() {
-    let selectedMonthNumber = this.state.selectedMonthNumber - 1;
-    let { selectedYear } = this.state;
-    if (selectedMonthNumber === -1) {
-      selectedMonthNumber = 11;
-      selectedYear -= 1;
-    }
-    this.setState({
-      selectedMonthNumber,
-      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
-      selectedYear,
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
-    });
   }
 
   getScheduleData() {
@@ -105,20 +59,6 @@ class App extends React.Component {
     });
   }
 
-  setPartySize(e) {
-    this.setState({
-      partySize: e.target.value,
-    });
-  }
-
-  isPast(id) {
-    return parseFloat(id) < this.todaysId;
-  }
-
-  isToday(id) {
-    return parseFloat(id) === this.todaysId;
-  }
-
   delayedClose() {
     setTimeout(() => {
       this.setState({
@@ -131,7 +71,6 @@ class App extends React.Component {
     const dateId = parseFloat(e.target.id);
     this.setState({
       selectedDateId: dateId,
-      longDate: calendarHelpers.parseId(dateId),
       selectedWeekdayIndex: calendarHelpers.dayFromId(dateId),
     }, this.delayedClose);
   }
@@ -151,7 +90,7 @@ class App extends React.Component {
   render() {
     return (
       <div className='calendar-container'>
-        <ReservationBox state={this.state} calendarMethods={this.calendarMethods}/>
+        <ReservationBox state={this.state} reservationMethods={this.reservationMethods}/>
       </div>
     );
   }

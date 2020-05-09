@@ -1,7 +1,6 @@
 import React from 'react';
 import MonthSelector from './MonthSelector.jsx';
 import CalendarTable from './CalendarTable.jsx';
-import CalendarWrapper from './CalendarWrapper.jsx';
 
 const CalendarBox = (props) => (
   <CalendarWrapper displayed={props.state.displayCalendar}>
