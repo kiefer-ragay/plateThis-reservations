@@ -28,16 +28,17 @@ class CalendarClass extends React.Component {
       isPast: this.isPast.bind(this),
       isToday: this.isToday.bind(this),
     };
+    this.todaysDate = new Date().getDate();
+    this.todaysYear = new Date().getYear() + 1900;
+    this.todaysMonth = new Date().getMonth();
 
-    this.todaysId = calendarHelpers.createId(new Date().getYear() + 1900, new Date().getMonth(),
-      new Date().getDate());
-    this.latestMonthAllowed = calendarHelpers.getLatestMonth(new Date().getMonth());
+    this.todaysId = calendarHelpers.createId(this.todaysYear, this.todaysMonth, this.todaysDate);
+    this.latestMonthAllowed = calendarHelpers.getLatestMonth(this.todaysMonth);
+
     this.state = {
-      selectedMonthNumber: this.month,
-      selectedMonthName: calendarHelpers.monthNumToName(this.month),
-      selectedYear: new Date().getYear() + 1900,
-      latestMonthAllowed: calendarHelpers.getLatestMonth(this.month),
-      rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.year, this.month),
+      selectedMonthNumber: this.todaysMonth,
+      selectedYear: this.todaysYear,
+      rowsOfSelectedMonth: calendarHelpers.allWeekRows(this.todaysYear, this.todaysMonth),
     };
   }
 
@@ -50,7 +51,6 @@ class CalendarClass extends React.Component {
     }
     this.setState({
       selectedMonthNumber,
-      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
       selectedYear,
       rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
     });
@@ -65,7 +65,6 @@ class CalendarClass extends React.Component {
     }
     this.setState({
       selectedMonthNumber,
-      selectedMonthName: calendarHelpers.monthNumToName(selectedMonthNumber),
       selectedYear,
       rowsOfSelectedMonth: calendarHelpers.allWeekRows(selectedYear, selectedMonthNumber),
     });
@@ -84,8 +83,11 @@ class CalendarClass extends React.Component {
     <CalendarWrapper onClick={this.props.reservationMethods.showCalendar}
     // displayed is passed down through main app state
      displayed={this.props.topState.displayCalendar}>
-      <MonthSelector state={this.state} calendarMethods={this.calendarMethods}/>
-      <CalendarTable state={this.state} calendarMethods={this.calendarMethods} reservationMethods={this.props.reservationMethods} selectedId={this.props.topState.selectedDateId}/>
+      <MonthSelector state={this.state}
+      calendarMethods={this.calendarMethods} latestMonth={this.latestMonthAllowed}/>
+      <CalendarTable state={this.state}
+      calendarMethods={this.calendarMethods} reservationMethods={this.props.reservationMethods}
+      selectedId={this.props.topState.selectedDateId}/>
    </CalendarWrapper>
     );
   }

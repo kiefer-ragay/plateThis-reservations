@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import PreviousMonthButton from './PreviousMonthButton.jsx';
 import NextMonthButton from './NextMonthButton.jsx';
+import calendarHelpers from '../calendarHelpers.js';
 
 const MonthSelectorContainer = styled.div`
   text-align: center;
@@ -21,9 +22,9 @@ const MonthSelector = (props) => (
   <MonthSelectorContainer id='monthSelector'>
     <PreviousMonthButton onClick={props.calendarMethods.getPreviousMonth}
     disabled={new Date().getMonth() === props.state.selectedMonthNumber}/>
-    {props.state.selectedMonthName} {props.state.selectedYear}
+    {calendarHelpers.monthNumToName(props.state.selectedMonthNumber)} {props.state.selectedYear}
     <NextMonthButton onClick={props.calendarMethods.getNextMonth}
-    disabled={props.state.selectedMonthNumber === props.state.latestMonthAllowed}/>
+    disabled={props.state.selectedMonthNumber === props.latestMonth}/>
   </MonthSelectorContainer>
 );
 
