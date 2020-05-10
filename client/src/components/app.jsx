@@ -4,7 +4,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-// import path from 'path';
 import calendarHelpers from '../calendarHelpers.js';
 import ReservationBox from './ReservationBox.jsx';
 
@@ -23,10 +22,12 @@ class App extends React.Component {
       setPartySize: this.setPartySize.bind(this),
     };
 
-    this.day = new Date().getDate();
-    this.year = new Date().getYear() + 1900;
-    this.month = new Date().getMonth();
-    this.todaysId = calendarHelpers.createId(this.year, this.month, this.day);
+    this.todaysId = calendarHelpers.createId(new Date().getYear() + 1900, new Date().getMonth(),
+      new Date().getDate());
+
+    // selectedDateId 'lifted up' from Calendar App to be
+    // used for ReservationBox
+
     this.state = {
       dates_closed: [],
       restaurant_name: '',
@@ -127,12 +128,14 @@ class App extends React.Component {
     }, 200);
   }
 
+  // the below method should normally be in the Calendar component (minus the delayedClose callback)
+  // however, it's in this component as the 'selectedDateId' state is used for all subcomponents
+  // in the App!
+
   selectDate(e) {
     const dateId = parseFloat(e.target.id);
     this.setState({
       selectedDateId: dateId,
-      longDate: calendarHelpers.parseId(dateId),
-      selectedWeekdayIndex: calendarHelpers.dayFromId(dateId),
     }, this.delayedClose);
   }
 

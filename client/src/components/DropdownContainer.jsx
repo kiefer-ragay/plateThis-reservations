@@ -1,6 +1,7 @@
 /* eslint-disable radix */
 import styled from 'styled-components';
 import React from 'react';
+import calendarHelpers from '../calendarHelpers.js';
 
 const peopleArray = (maxPeople) => {
   const arr = [];
@@ -90,7 +91,7 @@ const TimeDropdown = (props) => (
       </SvgDark>
     </RightSvgSpan>
     <SelectBox>
-    {props.timeslots[props.weekdayIndex].map((slot) => <option value={slot}>
+    {props.timeslots[calendarHelpers.weekdayFromId(props.selectedDateId)].map((slot) => <option value={slot}>
       {parseTimeslot(slot)}</option>)}
     </SelectBox>
   </SelectWrapper>
