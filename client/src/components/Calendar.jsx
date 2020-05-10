@@ -35,6 +35,11 @@ class CalendarClass extends React.Component {
     this.todaysId = calendarHelpers.createId(this.todaysYear, this.todaysMonth, this.todaysDate);
     this.latestMonthAllowed = calendarHelpers.getLatestMonth(this.todaysMonth);
 
+    // if the calendar were a standalone component, it requires the selectedDateId state locally
+    // in addition to the selectDate method
+    // both have been elevated to parent App to allow
+    // selectedDateId to be accessed by parent siblings
+
     this.state = {
       selectedMonthNumber: this.todaysMonth,
       selectedYear: this.todaysYear,

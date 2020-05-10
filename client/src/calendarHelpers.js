@@ -5,8 +5,6 @@ calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June'
 
 calendarHelpers.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-// this is no longer relevant
-
 calendarHelpers.getLatestMonth = (monthNumber) => {
   if (monthNumber + 3 > 11) {
     return monthNumber + 3 - 12;
@@ -47,12 +45,8 @@ calendarHelpers.blankDaysBefore = (year, monthNumber) => {
     .lastDateOfMonth(previousMonthsYear, previousMonthNumber);
 
   for (let i = lastDayOfPreviousMonth - (numOfBlanks - 1); i <= lastDayOfPreviousMonth; i += 1) {
-    const dayObj = {};
-    dayObj.day = i;
-    dayObj.yr = previousMonthsYear;
-    dayObj.mo = previousMonthNumber;
-    dayObj.id = calendarHelpers.createId(previousMonthsYear, previousMonthNumber, i);
-    blanksArray.push(dayObj);
+    const id = calendarHelpers.createId(previousMonthsYear, previousMonthNumber, i);
+    blanksArray.push(id);
   }
   return blanksArray;
 
@@ -63,12 +57,8 @@ calendarHelpers.firstWeekRow = (year, monthNumber) => {
   const firstWeek = calendarHelpers.blankDaysBefore(year, monthNumber);
   const currentMonthsDaysInRow = 7 - firstWeek.length;
   for (let i = 1; i <= currentMonthsDaysInRow; i += 1) {
-    const dayObj = {};
-    dayObj.day = i;
-    dayObj.yr = year;
-    dayObj.mo = monthNumber;
-    dayObj.id = calendarHelpers.createId(year, monthNumber, i);
-    firstWeek.push(dayObj);
+    const id = calendarHelpers.createId(year, monthNumber, i);
+    firstWeek.push(id);
   }
   return firstWeek;
 };
@@ -79,12 +69,8 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
   const lastWeek = [];
 
   for (let i = lastDate - lastDayIndex; i <= lastDate; i += 1) {
-    const dayObj = {};
-    dayObj.day = i;
-    dayObj.mo = monthNumber;
-    dayObj.yr = year;
-    dayObj.id = calendarHelpers.createId(year, monthNumber, i);
-    lastWeek.push(dayObj);
+    const id = calendarHelpers.createId(year, monthNumber, i);
+    lastWeek.push(id);
   }
   let nextYear = year;
   let nextMonth = monthNumber + 1;
@@ -95,12 +81,8 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
 
   let j = 1;
   while (lastWeek.length < 7) {
-    const dayObj = {};
-    dayObj.day = j;
-    dayObj.mo = nextMonth;
-    dayObj.yr = nextYear;
-    dayObj.id = calendarHelpers.createId(nextYear, nextMonth, j);
-    lastWeek.push(dayObj);
+    const id = calendarHelpers.createId(nextYear, nextMonth, j);
+    lastWeek.push(id);
     j += 1;
   }
   return lastWeek;
@@ -115,18 +97,16 @@ calendarHelpers.lastWeekRow = (year, monthNumber) => {
 calendarHelpers.allWeekRows = (year, monthNumber) => {
   const firstWeek = calendarHelpers.firstWeekRow(year, monthNumber);
   const lastWeek = calendarHelpers.lastWeekRow(year, monthNumber);
+  const firstDayOfSecondWeek = calendarHelpers.dayNumFromId(firstWeek[6]);
+  const firstDayOfLastWeek = calendarHelpers.dayNumFromId(lastWeek[0]);
   const allWeeks = [];
   allWeeks.push(firstWeek);
   let dayCounter = 0;
   let currentWeek = [];
 
-  for (let i = firstWeek[6].day + 1; i < lastWeek[0].day; i += 1) {
-    const dayObj = {};
-    dayObj.day = i;
-    dayObj.mo = monthNumber;
-    dayObj.yr = year;
-    dayObj.id = calendarHelpers.createId(year, monthNumber, i);
-    currentWeek.push(dayObj);
+  for (let i = firstDayOfSecondWeek + 1; i < firstDayOfLastWeek; i += 1) {
+    const id = calendarHelpers.createId(year, monthNumber, i);
+    currentWeek.push(id);
     dayCounter += 1;
     if (dayCounter === 7) {
       allWeeks.push(currentWeek);
