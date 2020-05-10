@@ -4,7 +4,6 @@
 
 // use jest --updateSnapshot --'testNamePattern' to re-record snapshot of particular test
 
-import { shallow } from 'enzyme';
 import React from 'react';
 import calendarHelpers from './calendarHelpers.js';
 import testData from './calendarTestData.js';

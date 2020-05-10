@@ -18,7 +18,7 @@ const CalendarWrapper = styled.div`
   z-index: 1;
 `;
 
-class CalendarClass extends React.Component {
+class Calendar extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,7 +38,7 @@ class CalendarClass extends React.Component {
     // if the calendar were a standalone component, it requires the selectedDateId state locally
     // in addition to the selectDate method
     // both have been elevated to parent App to allow
-    // selectedDateId to be accessed by parent siblings
+    // selectedDateId to be accessed by siblings
 
     this.state = {
       selectedMonthNumber: this.todaysMonth,
@@ -98,4 +98,4 @@ class CalendarClass extends React.Component {
   }
 }
 
-export default CalendarClass;
+export default Calendar;

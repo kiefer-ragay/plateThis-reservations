@@ -96,8 +96,7 @@ const TimeDropdown = (props) => (
     </SelectBox>
   </SelectWrapper>
 );
-
-const SizeDropdown = (props) => (
+const SizeDropdown = () => (
   <SelectWrapper>
      <LeftSvgSpan>
       <SvgLight xmlns='http://www.w3.org/2000/svg'>
@@ -110,23 +109,20 @@ const SizeDropdown = (props) => (
       <path d='M8 10.5a1 1 0 0 1-.7-.29l-3.06-3a1 1 0 1 1 1.41-1.42L8 8.1l2.35-2.31a1 1 0 0 1 1.41 1.42l-3.06 3a1 1 0 0 1-.7.29z'></path>
       </SvgDark>
     </RightSvgSpan>
-    <SelectBox onChange={props.setPartySize} defaultValue='2'>
+    <SelectBox defaultValue='2'>
     <option value='1'>1 person</option>
     {peopleArray(20).map((number) => <option value={number}>{number} people</option>)}
     </SelectBox>
   </SelectWrapper>
 );
-
 const DropdownBox = styled.div`
   display: inherit;
   margin-left: -4px;
 `;
-
 const DropdownContainer = (props) => (
   <DropdownBox>
-    <TimeDropdown timeslots={props.timeslots} weekdayIndex={props.weekdayIndex}/>
-    <SizeDropdown setPartySize={props.setPartySize}/>
+    <TimeDropdown timeslots={props.timeslots} selectedDateId={props.selectedDateId}/>
+    <SizeDropdown/>
   </DropdownBox>
 );
-
 export default DropdownContainer;
