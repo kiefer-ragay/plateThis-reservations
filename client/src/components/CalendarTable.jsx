@@ -4,6 +4,7 @@ import React from 'react';
 import WeekdayRow from './WeekdayRow.jsx';
 import CalendarRow from './CalendarRow.jsx';
 import CalendarDate from './CalendarDate.jsx';
+import calendarHelpers from '../calendarHelpers.js';
 
 const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
@@ -31,7 +32,7 @@ const CalendarTable = (props) => (
           past={props.calendarMethods.isPast(item.id)}
           isToday={props.calendarMethods.isToday(item.id)}
           selected={item.id === props.selectedId}>
-          {item.day}
+          {calendarHelpers.dayNumFromId(item.id)}
         </CalendarDate>)}
       </CalendarRow>)}
       </tbody>

@@ -67,6 +67,10 @@ class App extends React.Component {
     }, 200);
   }
 
+  // the below method should normally be in the Calendar component (minus the delayedClose callback)
+  // however, it's in this component as the 'selectedDateId' state is used for all subcomponents
+  // in the App!
+
   selectDate(e) {
     const dateId = parseFloat(e.target.id);
     this.setState({

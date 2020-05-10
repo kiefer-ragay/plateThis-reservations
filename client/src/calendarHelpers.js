@@ -6,25 +6,6 @@ calendarHelpers.months = ['January', 'February', 'March', 'April', 'May', 'June'
 calendarHelpers.weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 // this is no longer relevant
-// just need an array of all the month's index values and year
-calendarHelpers.getSurroundingMonths = () => {
-  const monthObj = {};
-  const currentDate = new Date();
-  const currentYear = currentDate.getYear();
-  const currentMonth = currentDate.getMonth();
-  for (let i = currentMonth - 1; i <= currentMonth + 3; i += 1) {
-    if (i > 11) {
-      monthObj[calendarHelpers.monthNumToName(i - 11)] = (32
-        - new Date(currentYear + 1, i - 11, 32).getDate());
-    } else if (i === -1) {
-      monthObj[calendarHelpers.monthNumToName(11)] = (32
-        - new Date(currentYear - 1, 11, 32).getDate());
-    } else {
-      monthObj[calendarHelpers.monthNumToName(i)] = (32 - new Date(currentYear, i, 32).getDate());
-    }
-  }
-  return monthObj;
-};
 
 calendarHelpers.getLatestMonth = (monthNumber) => {
   if (monthNumber + 3 > 11) {
@@ -162,11 +143,10 @@ calendarHelpers.createId = (year, monthNumber, day) => (
 );
 
 calendarHelpers.idToLongDate = (id) => {
-  const floatedId = parseFloat(id);
   const year = Math.floor(id);
-  const monthNum = Math.round(calendarHelpers.roundDecimal(floatedId % 1, 2) * 100);
+  const monthNum = calendarHelpers.monthFromId(id);
   const monthName = calendarHelpers.monthNumToName(monthNum);
-  const day = Math.round(calendarHelpers.roundDecimal(((floatedId % 1) % 0.01 * 10000), 4));
+  const day = calendarHelpers.dayNumFromId(id);
   const dayOfWeek = calendarHelpers.weekdays[new Date(year, monthNum, day).getDay()];
   return (`${dayOfWeek}, ${monthName} ${day}`);
 };

@@ -1,5 +1,5 @@
 const path = require('path');
-const entryPath = path.join(__dirname, 'client', 'src', 'components', 'app.jsx');
+const entryPath = path.join(__dirname, 'client', 'src', 'components', 'App.jsx');
 const outputPath = path.join(__dirname, 'client', 'dist');
 
 module.exports = {
