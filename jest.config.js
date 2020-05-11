@@ -9,4 +9,5 @@ module.exports = {
     'enzyme-to-json/serializer'],
   setupFiles: [
     './setupTests.js'],
+  verbose: true,
 };
