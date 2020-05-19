@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+   reservations:
+     image: kiefer898/yelp:reservations_proxied
+     depends_on:
+      - 'mongo_database'
+     ports:
+      - '3000:3000'
+
+   mongo_database:
+      image: mongo:latest
