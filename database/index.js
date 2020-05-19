@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const seeder = require('./seeder.js');
 const schema = require('./schema');
 
+// localhost address below must be changed to 'mongo_database' if docker compose is used
+
 mongoose.connect('mongodb://localhost/reservations', { useNewUrlParser: true });
 
 const db = mongoose.connection;
