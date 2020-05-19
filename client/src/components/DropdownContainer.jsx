@@ -76,6 +76,10 @@ font-weight: 400;
 font-size: 14px;
 line-height: 20px;
 outline: none;
+transition: border-color .2s ease-in-out;
+  :hover {
+    border-color: #757280;
+  }
 `;
 
 const TimeDropdown = (props) => (
